@@ -29,7 +29,7 @@ export const HorarioPage = () => {
     if (!window.confirm('¿Seguro que deseas eliminar este horario?')) return;
     try {
       await HorarioService.deleteHorario(id);
-      setHorarios(prev => prev.filter(h => h.id !== id));
+      setHorarios((prev) => prev.filter((h) => h.id !== id));
     } catch (err) {
       alert('Error al eliminar');
     }
@@ -37,12 +37,12 @@ export const HorarioPage = () => {
 
   const handleToggleDisponible = async (id, nuevoEstado) => {
     try {
-      const horarioActual = horarios.find(h => h.id === id);
+      const horarioActual = horarios.find((h) => h.id === id);
       const horarioActualizado = { ...horarioActual, disponible: nuevoEstado };
-      
+
       await HorarioService.updateHorario(id, horarioActualizado);
-      setHorarios(prev =>
-        prev.map(h => (h.id === id ? horarioActualizado : h))
+      setHorarios((prev) =>
+        prev.map((h) => (h.id === id ? horarioActualizado : h))
       );
     } catch (err) {
       alert('Error al actualizar disponibilidad');
@@ -65,7 +65,7 @@ export const HorarioPage = () => {
         <p className="no-data">No hay horarios registrados.</p>
       ) : (
         <div className="horarios-grid">
-          {horarios.map(horario => (
+          {horarios.map((horario) => (
             <HorarioCard
               key={horario.id}
               horario={horario}
@@ -78,3 +78,5 @@ export const HorarioPage = () => {
     </div>
   );
 };
+
+export default HorarioPage;

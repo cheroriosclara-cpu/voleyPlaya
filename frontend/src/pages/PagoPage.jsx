@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { PagoService } from '../service/PagoService';
+import { listarPagos } from '../service/PagoService';
 import { PagoCard } from '../components/PagoCard';
 import '../styles/pago.css';
 
@@ -17,16 +17,16 @@ export const PagoPage = () => {
   }, []);
 
   const cargarPagos = async () => {
-    try {
-      setLoading(true);
-      const data = await PagoService.obtenerPagos();
-      setPagos(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    setLoading(true);
+    const response = await listarPagos();
+    setPagos(response.data);
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
