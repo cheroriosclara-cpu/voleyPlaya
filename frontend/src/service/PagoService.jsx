@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:8080/api'}/pagos`;
+const BASE_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/cancha`;
 
 export const listarPagos = () => axios.get(BASE_URL);
 export const buscarPagoPorId = (id) => axios.get(`${BASE_URL}/${id}`);

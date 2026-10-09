@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080/api/horario'; // Cambia por tu URL backend
+const API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/horario`;
 
 export const HorarioService = {
   // Obtener todos los horarios
@@ -26,7 +26,7 @@ export const HorarioService = {
     return await res.json();
   },
 
-  // Actualizar horario existente
+  // Actualizar un horario
   updateHorario: async (id, horarioData) => {
     const res = await fetch(`${API_URL}/${id}`, {
       method: 'PUT',
@@ -37,9 +37,11 @@ export const HorarioService = {
     return await res.json();
   },
 
-  // Eliminar horario
+  // Eliminar un horario
   deleteHorario: async (id) => {
-    const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+    const res = await fetch(`${API_URL}/${id}`, {
+      method: 'DELETE',
+    });
     if (!res.ok) throw new Error('Error al eliminar el horario');
     return true;
   }

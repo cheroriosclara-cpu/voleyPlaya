@@ -1,13 +1,13 @@
 import CanchaCard from "../components/CanchaCard.jsx";
-import { obtenerCanchas } from "../service/CanchaService.jsx";
+import { listarCanchas } from '../service/CanchaService';
 import { useEffect, useState } from "react";
 
 function CanchaPage() {
   const [canchas, setCanchas] = useState([]);
 
   useEffect(() => {
-    obtenerCanchas()
-      .then((data) => setCanchas(data))
+    listarCanchas()
+      .then((response) => setCanchas(response.data))
       .catch((error) => console.error("Error:", error));
   }, []);
 
@@ -17,8 +17,7 @@ function CanchaPage() {
       <h2>Canchas</h2>
       <div className="cancha">
         {canchas.map((cancha) => (
-          <CanchaCard key={cancha.id} 
-          cancha={cancha} />
+          <CanchaCard key={cancha.id} cancha={cancha} />
         ))}
       </div>
     </div>

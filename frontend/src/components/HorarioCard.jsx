@@ -1,42 +1,35 @@
 import React from 'react';
-import '../styles/horario.css';
 
 export const HorarioCard = ({ horario, onDelete, onToggleDisponible }) => {
-  const { id, horaInicio, horaFin, disponible, precio, diaSemana } = horario;
+  const { id, horaInicio, horaFin, disponible, fecha } = horario;
 
   return (
-    <div className={`horario-card ${disponible ? 'disponible' : 'ocupado'}`}>
-      <div className="horario-header">
-        <span className="horario-dia">{diaSemana || 'Todos los días'}</span>
-        <span className={`badge ${disponible ? 'badge-success' : 'badge-danger'}`}>
-          {disponible ? 'Disponible' : 'Reservado'}
+    <div className="horario-card" style={{ border: '1px solid #ccc', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
+      <h3>Horario #{id}</h3>
+      {fecha && <p><strong>Fecha:</strong> {fecha}</p>}
+      <p><strong>Hora:</strong> {horaInicio} - {horaFin}</p>
+      <p>
+        <strong>Estado:</strong>{' '}
+        <span style={{ color: disponible ? 'green' : 'red' }}>
+          {disponible ? 'Disponible' : 'No disponible'}
         </span>
-      </div>
+      </p>
 
-      <div className="horario-body">
-        <p className="horario-time">
-          🕒 {horaInicio} - {horaFin}
-        </p>
-        {precio && <p className="horario-precio">💰 S/. {precio}</p>}
-      </div>
+      <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem' }}>
+        <button
+          onClick={() => onToggleDisponible(id, !disponible)}
+          className="btn btn-secondary"
+        >
+          {disponible ? 'Marcar Ocupado' : 'Marcar Disponible'}
+        </button>
 
-      <div className="horario-actions">
-        {onToggleDisponible && (
-          <button 
-            className="btn btn-secondary btn-sm"
-            onClick={() => onToggleDisponible(id, !disponible)}
-          >
-            {disponible ? 'Marcar Ocupado' : 'Marcar Disponible'}
-          </button>
-        )}
-        {onDelete && (
-          <button 
-            className="btn btn-danger btn-sm"
-            onClick={() => onDelete(id)}
-          >
-            Eliminar
-          </button>
-        )}
+        <button
+          onClick={() => onDelete(id)}
+          className="btn btn-danger"
+          style={{ backgroundColor: '#dc3545', color: '#fff' }}
+        >
+          Eliminar
+        </button>
       </div>
     </div>
   );
