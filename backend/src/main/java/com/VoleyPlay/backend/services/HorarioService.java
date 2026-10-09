@@ -2,47 +2,41 @@ package com.VoleyPlay.backend.services;
 
 import com.VoleyPlay.backend.model.Horario;
 import com.VoleyPlay.backend.repository.HorarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class HorarioService {
-    private final HorarioRepository horarioRepository;
 
-    public HorarioService(HorarioRepository horarioRepository) {
-        this.horarioRepository = horarioRepository;
-    }
+    @Autowired
+    private HorarioRepository horarioRepository;
 
-    public List<Horario> listar() {
+    // --- 2 GETs ---
+    public List<Horario> obtenerTodos() {
         return horarioRepository.findAll();
     }
 
-    public Horario buscarPorId(Long id) {
-        return horarioRepository.findById(id)
-                .orElse(null);
+    public List<Horario> obtenerPorCancha(Long canchaId) {
+        return horarioRepository.findByCanchaId(canchaId);
     }
 
-    public Horario guardar(Horario horario) {
+    // --- 2 POSTs ---
+    public Horario guardarUno(Horario horario) {
         return horarioRepository.save(horario);
     }
 
-    public Horario actualizar(Long id, Horario datos) {
-        Horario horario = horarioRepository.findById(id)
-                .orElse(null);
-
-        if (horario == null) {
-            return null;
-        }
-
-        horario.setHoraInicio(datos.getHoraInicio());
-        horario.setHoraFin(datos.getHoraFin());
-        horario.setPrecio(datos.getPrecio());
-
-        return horarioRepository.save(horario);
+    public List<Horario> guardarVarios(List<Horario> horarios) {
+        return horarioRepository.saveAll(horarios);
     }
 
-    public void eliminar(Long id) {
+    // --- 2 DELETEs ---
+    public void eliminarPorId(Long id) {
         horarioRepository.deleteById(id);
+    }
+
+    public void eliminarPorCancha(Long canchaId) {
+        horarioRepository.deleteByCanchaId(canchaId);
     }
 }
